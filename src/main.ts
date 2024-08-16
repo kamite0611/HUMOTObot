@@ -51,8 +51,7 @@ export function myFunction() {
 
   if (!ikeruData.length) return;
 
-  let message =
-    "URL:https://reserve.fumotoppara.net/reserved/reserved-calendar-list";
+  let message = "URL:https://reserve.fumotoppara.net/";
 
   ikeruData.map((data: any) => {
     message += `\n${data.calDate}: ${data.remainCount}`;
