@@ -45,8 +45,8 @@ export function myFunction() {
     if (startDate && date < startDate) return false;
 
     const isHoliday = date.getDay() == 6 || isHolidayByDate(nextDay);
-    // return isHoliday && data.remainCount > 0;
-    return isHoliday;
+    return isHoliday && data.remainCount > 0;
+    // return isHoliday;
   });
 
   if (!ikeruData.length) return;

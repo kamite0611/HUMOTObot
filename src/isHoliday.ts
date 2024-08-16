@@ -4,8 +4,6 @@ export function isHolidayByDate(date: Date) {
 }
 
 export function isHoliday(year: number, month: number, day: number) {
-  console.log("isHoliday", year, month, day);
-
   return isNationalHoliday(year, month, day) || isInLieu(year, month, day);
 }
 /*
