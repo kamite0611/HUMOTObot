@@ -44,7 +44,12 @@ export function myFunction() {
 
     if (startDate && date < startDate) return false;
 
-    const isHoliday = date.getDay() == 6 || isHolidayByDate(nextDay);
+    /** 連休を取得 */
+    const isHoliday =
+      date.getDay() == 6 ||
+      ((isHolidayByDate(date) || date.getDay() == 0) &&
+        isHolidayByDate(nextDay));
+
     return isHoliday && data.remainCount > 0;
     // return isHoliday;
   });
