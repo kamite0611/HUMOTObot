@@ -1,7 +1,6 @@
-import { myFunction } from './main';
+import moment from "moment";
 
-declare const global: {
-  [x: string]: unknown;
+const main = () => {
+  const now = moment();
+  console.log(now.format());
 };
-
-global.main = myFunction;
