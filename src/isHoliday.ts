@@ -1,5 +1,11 @@
 // 祝日または振替休日または国民の休日
+export function isHolidayByDate(date: Date) {
+  return isHoliday(date.getFullYear(), date.getMonth() + 1, date.getDate());
+}
+
 export function isHoliday(year: number, month: number, day: number) {
+  console.log("isHoliday", year, month, day);
+
   return isNationalHoliday(year, month, day) || isInLieu(year, month, day);
 }
 /*
