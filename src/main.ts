@@ -1,5 +1,6 @@
 const LINE_TOKEN = "XnXlJBT3ECVXRNJd8ERL7tTPA8fnmw9WfYL4eZHBDtY";
 
+/** APIから日本の祝日を取得 */
 const getHolidays = (): Date[] => {
   const res = UrlFetchApp.fetch(
     "https://holidays-jp.github.io/api/v1/date.json"
@@ -10,6 +11,7 @@ const getHolidays = (): Date[] => {
   return Object.keys(holidaysData).map((holiday_str) => new Date(holiday_str));
 };
 
+/** 日付の比較 */
 const cmpDate = (date1: Date, date2: Date) => {
   if (date1.getFullYear() !== date2.getFullYear()) return false;
   if (date1.getMonth() !== date2.getMonth()) return false;
