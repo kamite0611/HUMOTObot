@@ -1,4 +1,4 @@
-const LINE_TOKEN = "XnXlJBT3ECVXRNJd8ERL7tTPA8fnmw9WfYL4eZHBDtY";
+const LINE_TOKEN = "swp2WwQO3LgbBv49cmYnFumnvmn2vPdZ2NUM4OurGmc";
 
 /** APIから日本の祝日を取得 */
 const getHolidays = (): Date[] => {
