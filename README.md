@@ -1,1 +1,5 @@
-# Getting Start
+# Getting Started
+
+```
+$ npm run push
+```
