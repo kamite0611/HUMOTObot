@@ -1,4 +1,5 @@
-const LINE_TOKEN = "swp2WwQO3LgbBv49cmYnFumnvmn2vPdZ2NUM4OurGmc";
+const LINE_TOKEN =
+  PropertiesService.getScriptProperties().getProperty("LINE_TOKEN");
 
 /** APIから日本の祝日を取得 */
 const getHolidays = (): Date[] => {
