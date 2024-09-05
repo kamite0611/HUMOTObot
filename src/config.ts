@@ -1,3 +1,8 @@
+/**
+ * 日付の取得
+ * @todo 一年ごとにJSONデータを更新する
+ * https://holidays-jp.github.io/api/v1/date.json
+ */
 export const HOLIDAYS = {
   "2023-01-01": "銀行休業日",
   "2023-01-02": "銀行休業日",
