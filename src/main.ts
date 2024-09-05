@@ -1,16 +1,11 @@
+import { HOLIDAYS } from "./config";
+
 const LINE_TOKEN =
   PropertiesService.getScriptProperties().getProperty("LINE_TOKEN");
 
 /** APIから日本の祝日を取得 */
-const getHolidays = (): Date[] => {
-  const res = UrlFetchApp.fetch(
-    "https://holidays-jp.github.io/api/v1/date.json"
-  );
-
-  const holidaysData = JSON.parse(res.getContentText());
-
-  return Object.keys(holidaysData).map((holiday_str) => new Date(holiday_str));
-};
+const getHolidays = (): Date[] =>
+  Object.keys(HOLIDAYS).map((holiday_str) => new Date(holiday_str));
 
 /** 日付の比較 */
 const cmpDate = (date1: Date, date2: Date) => {
@@ -45,12 +40,34 @@ const isHolidayNextDate = (date: Date, holidays: Date[]) => {
   return false;
 };
 
+/** 予約済みの日を取得 */
+const getReservedDate = (
+  reservedDatesCell: GoogleAppsScript.Spreadsheet.Range
+): Date[] => {
+  const reservedDatesStr: string = reservedDatesCell.getValue();
+
+  const reservedDates = reservedDatesStr
+    .split("\n")
+    .map((v: string) => new Date(v));
+
+  return reservedDates;
+};
+
+/** 予約済みの日かどうか */
+const isReservedDate = (date: Date, reservedDates: Date[]) => {
+  for (const reserved of reservedDates) {
+    if (cmpDate(date, reserved)) return true;
+  }
+  return false;
+};
+
 export function myFunction() {
   const spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = spreadSheet.getSheetByName("hoge");
   if (!sheet) return;
   const isActiveCell = sheet.getRange(1, 1);
   const startDateCell = sheet.getRange(2, 2);
+  const reservedDatesCell = sheet.getRange(3, 2);
 
   /** スプレットシート1列目 チェックされているか */
   const isActive = isActiveCell.getValue();
@@ -73,6 +90,7 @@ export function myFunction() {
 
   /** 祝日を取得 */
   const holidays = getHolidays();
+  const reservedDates = getReservedDate(reservedDatesCell);
 
   const caledersData = JSON.parse(res.getContentText());
   const calendarsSiteDateList = caledersData.calendarsSiteDateList;
@@ -88,9 +106,12 @@ export function myFunction() {
 
     if (startDate && date < startDate) return false;
 
-    /** 連休か & 枠が残っているか */
-    // return isHolidayNextDate(date, holidays);
-    return isHolidayNextDate(date, holidays) && data.remainCount > 0;
+    /** 連休の日付 & 未予約の日付 & 枠が残っているか */
+    return (
+      isHolidayNextDate(date, holidays) &&
+      !isReservedDate(date, reservedDates) &&
+      data.remainCount > 0
+    );
   });
 
   if (!ikeruData.length) return;
